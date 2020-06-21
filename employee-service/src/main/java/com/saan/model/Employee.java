@@ -57,6 +57,9 @@ public class Employee implements Serializable {
     @ApiModelProperty(notes = "The employee laptopCode")
     private String laptopCode;
 
+    @ApiModelProperty(notes = "The port")
+    private int port;
+
     // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     // @JoinColumn(name = "employee_id")
     // private List<Salary> salary;

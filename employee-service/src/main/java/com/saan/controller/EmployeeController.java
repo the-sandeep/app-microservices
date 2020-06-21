@@ -119,6 +119,7 @@ public class EmployeeController {
 
             Laptop response = proxy.findLaptopByLaptopCode(employee.getLaptopCode());
             employee.setLaptop(response.getLaptop());
+            employee.setPort(response.getPort());
 
             var _employee = employeeService.save(employee);
             return new ResponseEntity<>(_employee, HttpStatus.OK);
