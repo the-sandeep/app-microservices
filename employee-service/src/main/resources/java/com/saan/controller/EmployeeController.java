@@ -3,9 +3,7 @@
  */
 package com.saan.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.saan.model.Employee;
-import com.saan.model.Laptop;
-import com.saan.restclient.LaptopServiceProxy;
 import com.saan.service.impl.EmployeeService;
 
 import io.swagger.annotations.Api;
@@ -37,8 +32,6 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/api/v1/employee")
 @Api(value = "Employee Management System", description = "Operations pertaining to employee in Employee Management ")
 public class EmployeeController {
-    @Autowired
-    private LaptopServiceProxy proxy;
 
     @Autowired
     private EmployeeService employeeService;
@@ -86,40 +79,6 @@ public class EmployeeController {
     @PutMapping
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
         try {
-            var _employee = employeeService.save(employee);
-            return new ResponseEntity<>(_employee, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @ApiOperation(value = "update an employee")
-    @PutMapping("/rest-template")
-    public ResponseEntity<Employee> addEmployeeRestTemplate(@RequestBody Employee employee) {
-        try {
-
-            Map<String, String> uriVariable = new HashMap<>();
-            uriVariable.put("laptopCode", employee.getLaptopCode());
-            ResponseEntity<Laptop> responseEntity = new RestTemplate()
-                .getForEntity("http://localhost:8100/api/v1/laptop/{laptopCode}", Laptop.class, uriVariable);
-            Laptop response = responseEntity.getBody();
-            employee.setLaptop(response.getLaptop());
-
-            var _employee = employeeService.save(employee);
-            return new ResponseEntity<>(_employee, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @ApiOperation(value = "update an employee")
-    @PutMapping("/feign-client")
-    public ResponseEntity<Employee> addEmployeeFeignClient(@RequestBody Employee employee) {
-        try {
-
-            Laptop response = proxy.findLaptopByLaptopCode(employee.getLaptopCode());
-            employee.setLaptop(response.getLaptop());
-
             var _employee = employeeService.save(employee);
             return new ResponseEntity<>(_employee, HttpStatus.OK);
         } catch (Exception e) {
