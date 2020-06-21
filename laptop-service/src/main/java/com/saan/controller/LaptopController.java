@@ -3,6 +3,7 @@ package com.saan.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +29,18 @@ public class LaptopController {
     @Autowired
     private LaptopService laptopService;
 
+    @Autowired
+    private Environment environment;
+
     @GetMapping("/{laptopCode}")
     @ApiOperation(value = "Get an laptop by Id")
     public ResponseEntity<Laptop> findLaptopByLaptopCode(@PathVariable("laptopCode") String laptopCode) {
 
         Laptop _laptop = laptopService.findLaptopByLaptopCode(laptopCode);
-        if (_laptop != null)
+        if (_laptop != null) {
+            _laptop.setPort(Integer.valueOf(environment.getProperty("local.server.port")));
             return new ResponseEntity<>(_laptop, HttpStatus.OK);
-        else
+        } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

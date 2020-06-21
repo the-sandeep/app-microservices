@@ -45,4 +45,7 @@ public class Laptop implements Serializable {
     @ApiModelProperty(notes = "The employee laptop")
     private String laptop;
 
+    @ApiModelProperty(notes = "The port")
+    private int port;
+
 }

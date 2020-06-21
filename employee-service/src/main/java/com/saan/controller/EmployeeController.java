@@ -94,7 +94,7 @@ public class EmployeeController {
     }
 
     @ApiOperation(value = "update an employee")
-    @PutMapping("/rest-template")
+    @PostMapping("/rest-template")
     public ResponseEntity<Employee> addEmployeeRestTemplate(@RequestBody Employee employee) {
         try {
 
@@ -113,7 +113,7 @@ public class EmployeeController {
     }
 
     @ApiOperation(value = "update an employee")
-    @PutMapping("/feign-client")
+    @PostMapping("/feign-client")
     public ResponseEntity<Employee> addEmployeeFeignClient(@RequestBody Employee employee) {
         try {
 
