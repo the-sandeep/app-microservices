@@ -39,6 +39,7 @@ public class LaptopController {
         Laptop _laptop = laptopService.findLaptopByLaptopCode(laptopCode);
         if (_laptop != null) {
             _laptop.setPort(Integer.valueOf(environment.getProperty("local.server.port")));
+            System.err.println(_laptop.toString());
             return new ResponseEntity<>(_laptop, HttpStatus.OK);
         } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

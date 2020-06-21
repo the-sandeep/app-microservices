@@ -12,7 +12,7 @@ import com.saan.model.Laptop;
 @RibbonClient(name = "laptop-service")
 public interface LaptopServiceProxy {
 
-    @GetMapping("/api/v1/{laptopCode}")
+    @GetMapping("/api/v1/laptop/{laptopCode}")
     public Laptop findLaptopByLaptopCode(@PathVariable("laptopCode") String laptopCode);
 
 }
